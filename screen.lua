@@ -4,7 +4,7 @@ local layout_margin = 3
 local text_clock = wibox.widget.textclock("%R")
 
 local clock_icon = wibox.widget{
-    markup = '  ',
+    markup = "<span color='#cf6dd6'>  </span>",
     font = "Ionicons 11",
     align  = 'center',
     valign = 'center',
@@ -23,7 +23,7 @@ local clock = wibox.container.margin(wibox.widget(
 local bat_text =  wibox.widget.textbox("12%")
 
 local bat_icon = wibox.widget{
-    text = '  ',
+    markup = "<span color='#7dafff'>  </span>",
     font = "Ionicons 11",
     align  = 'center',
     valign = 'center',
@@ -34,10 +34,14 @@ local bat_icon = wibox.widget{
 awesome.connect_signal("widgets::battery", function(vol, charging)
     if charging then
         bat_text.text = "A/C"
-        bat_icon.text = "  "
+        bat_icon.markup = "<span color='#7dafff'>  </span>"
     else 
         bat_text.text = vol .. "%"
-        bat_icon.text = "  "
+        if vol > 20 then
+            bat_icon.markup = "<span color='#7dafff'>  </span>"
+        else 
+            bat_icon.markup = "<span color='#7dafff'>  </span>"
+        end
     end
 end)
 
@@ -54,7 +58,7 @@ local bat = wibox.container.margin(wibox.widget(
 local cpu_text =  wibox.widget.textbox("12%")
 
 local cpu_icon = wibox.widget{
-    markup = '  ',
+    markup = '<span color="#6dd676">  </span>',
     font = "Ionicons 11",
     align  = 'center',
     valign = 'center',
@@ -112,7 +116,6 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.container.background(cpu,"#212121"),
             wibox.container.background(bat,"#1c1c1c"),
             wibox.container.background(clock,"#121212"),
-            --wibox.container.margin(s.mylayoutbox, layout_margin, layout_margin, layout_margin, layout_margin),
         },
     }
 end)
