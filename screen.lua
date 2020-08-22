@@ -73,6 +73,10 @@ local cpu = wibox.container.margin(wibox.widget(
     }
 ),10, 10)
 
+
+awesome.connect_signal("widgets::cpu", function(usage)
+    cpu_text.text = tostring( usage ) .. " %"
+end)
 -- I changed the wall folder cause it's easier to set a new
 -- wallpaper 'with' nautilus now lul.
 local function set_wallpaper(s)
