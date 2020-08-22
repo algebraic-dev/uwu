@@ -42,8 +42,10 @@ local margin = wibox.widget {
 
 local popup = awful.popup {
     widget = margin,
-    placement    = awful.placement.right,
-    shape        = function(cr,w,h)
+    placement    = function(popup) 
+        return awful.placement.right(popup, { margins = { right = 5 } })
+    end,
+    shape = function(cr,w,h)
         gears.shape.rounded_rect(cr,w,h,100)
     end,
     x = 20,
