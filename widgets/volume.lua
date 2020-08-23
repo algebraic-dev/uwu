@@ -1,3 +1,7 @@
+--[[
+    Criação do popup de volume 
+]]
+
 local progress = wibox.widget {
     max_value     = 1,
     value         = 0.33,

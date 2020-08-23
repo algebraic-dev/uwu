@@ -1,6 +1,11 @@
+--[[
+    Criação da wibar
+]]
+
 local layout_margin = 3
 
--- The clock widget
+-- Widget de relógio
+
 local text_clock = wibox.widget.textclock("%R")
 
 local clock_icon = wibox.widget{
@@ -19,7 +24,8 @@ local clock = wibox.container.margin(wibox.widget(
     }
 ),10, 10)
 
--- Battery widget
+-- Widget de Bat
+
 local bat_text =  wibox.widget.textbox("12%")
 
 local bat_icon = wibox.widget{
@@ -30,6 +36,13 @@ local bat_icon = wibox.widget{
     widget = wibox.widget.textbox
 }
 
+local bat = wibox.container.margin(wibox.widget(
+    {
+        bat_icon,
+        bat_text,
+        layout = wibox.layout.fixed.horizontal,
+    }
+),10, 10)
 
 awesome.connect_signal("widgets::battery", function(vol, charging)
     if charging then
@@ -45,16 +58,8 @@ awesome.connect_signal("widgets::battery", function(vol, charging)
     end
 end)
 
-local bat = wibox.container.margin(wibox.widget(
-    {
-        bat_icon,
-        bat_text,
-        layout = wibox.layout.fixed.horizontal,
-    }
-),10, 10)
+-- Widget de CPU
 
-
--- CPU widget
 local cpu_text =  wibox.widget.textbox("12%")
 
 local cpu_icon = wibox.widget{
@@ -73,41 +78,37 @@ local cpu = wibox.container.margin(wibox.widget(
     }
 ),10, 10)
 
-
+-- Sinal do uso de cpu usado 
 awesome.connect_signal("widgets::cpu", function(usage)
     cpu_text.text = tostring( usage ) .. " %"
 end)
--- I changed the wall folder cause it's easier to set a new
--- wallpaper 'with' nautilus now lul.
+
+-- Função para criação do wallpaper para uma tela
 local function set_wallpaper(s)
-    local wallpaper = os.getenv("HOME") .. "/wall.jpg"
-    if type(wallpaper) == "function" then
-        wallpaper = wallpaper(s)
+    local wallpaper = beautiful.wallpaper
+    if wallpaper then 
+        if type(wallpaper) == "function" then
+            wallpaper = wallpaper(s)
+        end
+        gears.wallpaper.maximized(wallpaper, s, false)
     end
-    gears.wallpaper.maximized(wallpaper, s, false)
 end
 
--- Re-set wallpaper when a screen's geometry changes
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
     set_wallpaper(s)
 
+    -- Tags para cada workspace
     awful.tag({ "1", "2", "3", "4", "5"}, s, awful.layout.layouts[1])
 
+    -- Prompt para chamar os aplicativos
     s.mypromptbox = awful.widget.prompt()
 
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
-
+    -- Inicio da wibar
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 25 })
 
-
+    -- Setup da wibar
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         {
@@ -117,14 +118,9 @@ awful.screen.connect_for_each_screen(function(s)
         nil,
         { 
             layout = wibox.layout.fixed.horizontal,
-            wibox.container.background(cpu,"#212121"),
+            wibox.container.background(cpu,"#212121"), 
             wibox.container.background(bat,"#1c1c1c"),
             wibox.container.background(clock,"#121212"),
         },
     }
 end)
-
-
-
-
--- }}}

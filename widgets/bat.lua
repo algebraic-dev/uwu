@@ -1,3 +1,7 @@
+--[[
+    Chamada de comandos relativos a bateria
+]]
+
 local charging = false
 
 awful.spawn.easy_async_with_shell("find /sys/class/power_supply/BAT?/capacity", function (file, _, __, code)

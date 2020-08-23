@@ -1,4 +1,7 @@
 
+-- Funções do lado do awesomeWM para modificação do layout,
+-- do foco das janelas e outros.
+
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
@@ -61,6 +64,8 @@ function volume_down()
     awesome.emit_signal("widgets::volumechange")
 end
 
+-- Criação da tabela global 
+
 globalkeys = gears.table.join(
     awful.key({                   }, "XF86AudioLowerVolume", volume_down),
     awful.key({                   }, "XF86AudioRaiseVolume", volume_up),
@@ -97,7 +102,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "p", show_prompt, {description = "show the menubar", group = "launcher"})
 )
 
--- Client functions
+-- Funções da janela
 
 function kill_client(c) c:kill() end
 function move_to_master(c) c:swap(awful.client.getmaster()) end
@@ -126,8 +131,9 @@ function toogle_fullscreen(c)
     c:raise()
 end
 
+-- Instanciação das telas com as funções
 clientkeys = gears.table.join(
-    awful.key({ modkey,           }, "f", toogle_fullscreen, {description = "toggle fullscreen", group = "client"}),
+    awful.key({ modkey,           }, "f",      toogle_fullscreen, {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey,           }, "c",      kill_client, {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle, {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", move_to_master,{description = "move to master", group = "client"}),
