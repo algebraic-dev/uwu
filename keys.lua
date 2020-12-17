@@ -64,11 +64,24 @@ function volume_down()
     awesome.emit_signal("widgets::volumechange")
 end
 
+
+function brightness_up()
+    os.execute("brightnessctl -d 'intel_backlight' set +10%")
+    awesome.emit_signal("widgets::brightnesschange")
+end
+
+function brightness_down()
+    os.execute("brightnessctl -d 'intel_backlight' set 10%-")
+    awesome.emit_signal("widgets::brightnesschange")
+end
+
 -- Criação da tabela global 
 
 globalkeys = gears.table.join(
     awful.key({                   }, "XF86AudioLowerVolume", volume_down),
     awful.key({                   }, "XF86AudioRaiseVolume", volume_up),
+    awful.key({                   }, "XF86MonBrightnessDown", brightness_down),
+    awful.key({                   }, "XF86MonBrightnessUp", brightness_up),
     awful.key({                   }, "Print", screenshot),
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help, {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev, {description = "view previous", group = "tag"}),

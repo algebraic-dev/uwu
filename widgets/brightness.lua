@@ -1,9 +1,9 @@
 --[[
-    Criação do popup de volume 
+    Criação do popup de brightness 
 ]]
 
-local volume_icon = wibox.widget{
-    markup = "<span color='#cf6dd6'> </span>",
+local brightness_icon = wibox.widget{
+    markup = "<span color='#cf6dd6'> </span>",
     font = "Ionicons 25",
     valign = 'center',
     widget = wibox.widget.textbox
@@ -13,6 +13,7 @@ local text = wibox.widget{
     text = '0',
     font = "raleway 22",
     valign = 'center',
+    align = 'center',
     widget = wibox.widget.textbox
 }
 
@@ -20,20 +21,22 @@ local margin = wibox.widget {
     {         
         {
             {
-                volume_icon,
+                brightness_icon,
                 text,
                 layout = wibox.layout.fixed.horizontal
             },
             top = 10,
             left = 20,
             bottom = 10,
+            align = 'center',
             layout     = wibox.container.margin
         },
         forced_height = 60,
-        forced_width  = 110,
+        forced_width  = 120,
         layout = wibox.layout.fixed.vertical,
     },
     margins = 8,
+    align = 'center',
     widget  = wibox.container.margin
 }
 
@@ -59,9 +62,9 @@ local popup = awful.popup {
 
 local last = os.time(os.date("!*t"))
 
-awesome.connect_signal("widgets::volumechange", function()
+awesome.connect_signal("widgets::brightnesschange", function()
     last = os.time(os.date("!*t"))
-    volume = io.popen("pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \\([0-9][0-9]*\\)%.*,\\1,'"):read("*all*")
+    volume = io.popen("brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}'"):read("*all*")
     num = tonumber(volume)
     text.markup = num
     popup.visible = true
