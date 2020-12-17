@@ -8,8 +8,8 @@ local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "sans 8"
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#1A1A1A"
+theme.bg_normal     = "#00000000"
+theme.bg_focus      = "#00000000"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -62,7 +62,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = os.getenv("HOME") .. "/wall.jpg"
+theme.wallpaper = os.getenv("HOME") .. "/ataaa.jpg"
 
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus

@@ -2,10 +2,12 @@
     Criação da wibar
 ]]
 
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
+
 local layout_margin = 3
 
 -- Widget de relógio
-
 local text_clock = wibox.widget.textclock("%R")
 
 local clock_icon = wibox.widget{
@@ -16,13 +18,11 @@ local clock_icon = wibox.widget{
     widget = wibox.widget.textbox
 }
 
-local clock = wibox.container.margin(wibox.widget(
-    {
-        clock_icon, 
-        text_clock,
-        layout = wibox.layout.fixed.horizontal,
-    }
-),10, 10)
+local clock = wibox.container.margin(wibox.widget({
+    clock_icon, 
+    text_clock,
+    layout = wibox.layout.fixed.horizontal,
+}),10, 10)
 
 -- Widget de Bat
 
@@ -70,17 +70,15 @@ local cpu_icon = wibox.widget{
     widget = wibox.widget.textbox
 }
 
-local cpu = wibox.container.margin(wibox.widget(
-    {
-        cpu_icon,
-        cpu_text,
-        layout = wibox.layout.fixed.horizontal,
-    }
-),10, 10)
+local cpu = wibox.container.margin(wibox.widget({
+    cpu_icon,
+    cpu_text,
+    layout = wibox.layout.fixed.horizontal,
+}),10, 10)
 
 -- Sinal do uso de cpu usado 
 awesome.connect_signal("widgets::cpu", function(usage)
-    cpu_text.text = tostring( usage ) .. " %"
+    cpu_text.text = tostring( usage ) .. "%"
 end)
 
 -- Função para criação do wallpaper para uma tela
@@ -94,6 +92,35 @@ local function set_wallpaper(s)
     end
 end
 
+function round_this_shit(widget, color) 
+    local shape = function(cr,w,h)
+        gears.shape.rounded_rect(cr,w,h,10)
+    end
+    return wibox.container.margin(wibox.container.background(widget, color, shape),0,10,5,0)
+end
+
+local tasklist_buttons = gears.table.join(
+                     awful.button({ }, 1, function (c)
+                                              if c == client.focus then
+                                                  c.minimized = true
+                                              else
+                                                  c:emit_signal(
+                                                      "request::activate",
+                                                      "tasklist",
+                                                      {raise = true}
+                                                  )
+                                              end
+                                          end),
+                     awful.button({ }, 3, function()
+                                              awful.menu.client_list({ theme = { width = 250 } })
+                                          end),
+                     awful.button({ }, 4, function ()
+                                              awful.client.focus.byidx(1)
+                                          end),
+                     awful.button({ }, 5, function ()
+                                              awful.client.focus.byidx(-1)
+                                          end))
+
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
@@ -106,7 +133,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mypromptbox = awful.widget.prompt()
 
     -- Inicio da wibar
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 25 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
 
     -- Setup da wibar
     s.mywibox:setup {
@@ -118,9 +145,9 @@ awful.screen.connect_for_each_screen(function(s)
         nil,
         { 
             layout = wibox.layout.fixed.horizontal,
-            wibox.container.background(cpu,"#212121"), 
-            wibox.container.background(bat,"#1c1c1c"),
-            wibox.container.background(clock,"#121212"),
+            round_this_shit(bat,"#111"),
+            round_this_shit(cpu,"#111"),
+            round_this_shit(clock,"#111")
         },
     }
 end)

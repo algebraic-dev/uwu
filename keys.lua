@@ -3,7 +3,7 @@
 -- do foco das janelas e outros.
 
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 3, function () end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -16,14 +16,14 @@ function swap_previous() awful.client.swap.byidx( -1)    end
 function focus_next_screen() awful.screen.focus_relative( 1) end
 function focus_previous_screen() awful.screen.focus_relative(-1) end
 function spawn_terminal() awful.spawn(terminal) end
-function increase_width() awful.tag.incmwfact( 0.05)          end
-function decrease_width() awful.tag.incmwfact( -0.05)         end
+function increase_width() awful.tag.incmwfact( 0.05) end
+function decrease_width() awful.tag.incmwfact( -0.05) end
 function increase_master() awful.tag.incnmaster( 1, nil, true) end
 function decrease_master() awful.tag.incnmaster(-1, nil, true) end
-function increase_columns() awful.tag.incncol( 1, nil, true)    end
-function decrease_columns() awful.tag.incncol(-1, nil, true)    end
-function next_layout() awful.layout.inc( 1)                end
-function prev_layout() awful.layout.inc( 1)                end
+function increase_columns() awful.tag.incncol( 1, nil, true) end
+function decrease_columns() awful.tag.incncol(-1, nil, true) end
+function next_layout() awful.layout.inc( 1) end
+function prev_layout() awful.layout.inc( 1) end
 function run_prompt() awful.screen.focused().mypromptbox:run() end
 function show_prompt() menubar.show() end
 
@@ -55,12 +55,12 @@ function run_lua_prompt()
 end
 
 function volume_up()
-    os.execute("pactl -- set-sink-volume 0 +5%")
+    os.execute("pactl -- set-sink-volume 0 +1%")
     awesome.emit_signal("widgets::volumechange")
 end
 
 function volume_down()
-    os.execute("pactl -- set-sink-volume 0 -5%")
+    os.execute("pactl -- set-sink-volume 0 -1%")
     awesome.emit_signal("widgets::volumechange")
 end
 

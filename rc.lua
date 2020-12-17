@@ -55,19 +55,16 @@ awful.layout.layouts = {
 }
 
 -- Inicia os módulos
-
 require("screen")
 require("keys")
 require("widgets")
 
 -- Algumas outras configurações
-
 menubar.utils.terminal = terminal
 mykeyboardlayout = awful.widget.keyboardlayout()
 root.keys(globalkeys)
 
 -- Regras das janelas que vão ser criadas 
-
 awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
