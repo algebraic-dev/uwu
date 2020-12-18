@@ -2,6 +2,7 @@
     Criação da wibar
 ]]
 
+
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
@@ -100,26 +101,18 @@ function round_this_shit(widget, color)
 end
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c:emit_signal(
-                                                      "request::activate",
-                                                      "tasklist",
-                                                      {raise = true}
-                                                  )
-                                              end
-                                          end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+    awful.button({ }, 1, function (c)
+        if c == client.focus then c.minimized = true else
+            c:emit_signal(
+                "request::activate",
+                "tasklist",
+                {raise = true}
+            )
+        end
+    end),
+    awful.button({ }, 3, function() awful.menu.client_list({ theme = { width = 250 } }) end),
+    awful.button({ }, 4, function () awful.client.focus.byidx(1) end),
+    awful.button({ }, 5, function () wful.client.focus.byidx(-1) end))
 
 screen.connect_signal("property::geometry", set_wallpaper)
 
@@ -135,14 +128,68 @@ awful.screen.connect_for_each_screen(function(s)
     -- Inicio da wibar
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
 
+    s.mytasklist = awful.widget.tasklist {
+        screen   = s,
+        filter   = awful.widget.tasklist.filter.currenttags,
+        buttons  = tasklist_buttons,
+        style    = {
+            bg_normal = "#111",
+            bg_focus = "#111",
+            bg_minimize = "#111",
+            shape  = function(cr,w,h)
+                wibox.container.margin(
+                gears.shape.rounded_rect(cr,w,h,10),10,10,10,10)
+            end,
+        },
+        layout   = {
+            spacing = 10,
+            spacing_widget = {
+                forced_width = 5,
+                valign = 'center',
+                halign = 'center',
+                widget = wibox.container.place,
+            },
+            layout  = wibox.layout.flex.horizontal
+        },
+        -- Notice that there is *NO* wibox.wibox prefix, it is a template,
+        -- not a widget instance.
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            id     = 'icon_role',
+                            widget = wibox.widget.imagebox,
+                        },
+                        right = 5,
+                        left = 3,
+                        widget  = wibox.container.margin,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                margins = 5,
+                widget = wibox.container.margin
+            },
+            id     = 'background_role',
+            bg = "#F00",
+            widget = wibox.container.background,
+        }
+    }
+
+
     -- Setup da wibar
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
+        expand = "none",
         {
             layout = wibox.layout.fixed.horizontal,
             s.mypromptbox,
         },
-        nil,
+        {
+            s.mytasklist,
+            top = 5,
+            widget = wibox.container.margin
+        },
         { 
             layout = wibox.layout.fixed.horizontal,
             round_this_shit(bat,"#111"),
@@ -150,4 +197,5 @@ awful.screen.connect_for_each_screen(function(s)
             round_this_shit(clock,"#111")
         },
     }
+
 end)

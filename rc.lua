@@ -122,4 +122,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 -- Inicia o compositor
-awful.spawn.easy_async_with_shell("picom --conf $HOME/.config/picom.conf", function(out) end)
+awful.spawn.easy_async_with_shell("picom --experimental-backends --backend glx", function(out) end)
