@@ -23,6 +23,22 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
+theme.notification_shape = function(cr, width, height)
+    gears.shape.rounded_rect(cr, width, height, 5)
+end
+
+theme.notification_bg = "#1A1A1AF0"
+theme.notification_icon_size = 75
+
+theme.taglist_bg_occupied = "#000"
+theme.taglist_bg_empty = "#000"
+theme.taglist_bg_focus = "#F00"
+theme.taglist_fg_focus = "#00F"
+theme.taglist_fg_normal = "#00F"
+theme.taglist_fg_occupied = "#00F"
+theme.taglist_shape = gears.shape.circle
+theme.taglist_shape_focus = gears.shape.circle
+
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
@@ -34,7 +50,6 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
 theme.menu_height = dpi(20)
 theme.menu_width  = dpi(100)
-
 
 theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
 theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
@@ -62,7 +77,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = os.getenv("HOME") .. "/ataaa.jpg"
+theme.wallpaper = os.getenv("HOME") .. "/theme/bg.jpg"
 
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
