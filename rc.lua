@@ -3,19 +3,28 @@
 pcall(require, "luarocks.loader")
 
 -- Algumas dependências padrões do awesomeWM
-gears = require("gears")
-awful = require("awful")
-wibox = require("wibox")
-beautiful = require("beautiful")
-naughty = require("naughty")
-menubar = require("menubar")
+gears         = require("gears")
+awful         = require("awful")
+wibox         = require("wibox")
+beautiful     = require("beautiful")
+naughty       = require("naughty")
+menubar       = require("menubar")
 hotkeys_popup = require("awful.hotkeys_popup")
 
 require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
 
--- Error handling 
+-- Toml config
+TOML  = require("libs.lua-toml.toml")
+utils = require("src.utils")
 
+-- Alguns paths pra facilitar a vida
+actual_dir = os.getenv("HOME") .. "/.config/awesome/"
+
+-- Config do toml
+config_toml = utils.config
+
+-- Error handling 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical, title = "Oops, there were errors during startup!", text = awesome.startup_errors })
 end
@@ -30,15 +39,9 @@ awesome.connect_signal("debug::error", function (err)
 end)
 
 -- Carrega o tema do "beautiful"
-actual_dir = os.getenv("HOME") .. "/.config/awesome/"
-beautiful.init(actual_dir .. "/theme.lua")
+beautiful.init(actual_dir .. "/src/theme.lua")
 
 -- Configurações padrões do usuário
-terminal = "kitty"
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = terminal .. " -e " .. editor
-modkey = "Mod4"
-
 awful.layout.layouts = {
     awful.layout.suit.spiral,
     awful.layout.suit.floating,
@@ -54,13 +57,14 @@ awful.layout.layouts = {
     awful.layout.suit.magnifier,
 }
 
+modkey = "Mod4"
+
 -- Inicia os módulos
-require("screen")
-require("keys")
-require("widgets")
+require("src.screen")
+require("src.keys")
 
 -- Algumas outras configurações
-menubar.utils.terminal = terminal
+menubar.utils.terminal = config_toml.applications.terminal or "kitty"
 mykeyboardlayout = awful.widget.keyboardlayout()
 root.keys(globalkeys)
 
@@ -117,7 +121,7 @@ client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
  
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("focus", function(c)   c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 

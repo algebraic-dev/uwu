@@ -5,7 +5,10 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
+local config = require("src.utils").config
+
 local theme = {}
+
 
 theme.font          = "sans 8"
 theme.bg_normal     = "#00000000"
@@ -17,7 +20,7 @@ theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = dpi(config.theme.useless_gap)
 theme.border_width  = dpi(0)
 theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
@@ -30,16 +33,17 @@ end
 theme.notification_bg = "#1A1A1AF0"
 theme.notification_icon_size = 75
 
-theme.taglist_bg_occupied = "#000"
+theme.taglist_bg_occupied = "#151515"
 theme.taglist_bg_empty = "#000"
-theme.taglist_bg_focus = "#F00"
+theme.taglist_bg_focus = config_toml.theme.widget_color
 theme.taglist_fg_focus = "#00F"
 theme.taglist_fg_normal = "#00F"
 theme.taglist_fg_occupied = "#00F"
 theme.taglist_shape = gears.shape.circle
 theme.taglist_shape_focus = gears.shape.circle
 
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(0)
+
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
