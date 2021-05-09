@@ -35,7 +35,7 @@ end
 
 function utils.round(widget) 
     local shape = function(cr,w,h)
-        gears.shape.rounded_rect(cr,w,h,10)
+        gears.shape.rounded_rect(cr,w,h,7)
     end
     return wibox.container.margin(
         wibox.container.background(widget, config.theme.widget_bg_color, shape),0,10,5,0)

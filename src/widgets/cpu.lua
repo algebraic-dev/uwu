@@ -20,7 +20,7 @@ awesome.connect_signal("widgets::cpu", function(usage)
 end)
 
 
-awful.widget.watch("sh -c \"vmstat | tail -1 | awk '{printf $15}'\"", 5, function(xe, stdout, y)
+awful.widget.watch("sh -c \"top -b -n 1 | grep Cpu | awk '{ print $2 }'\"", 5, function(xe, stdout, y)
     cpu_text.text = tostring( 100 - tonumber(stdout) ) .. "%"
 end)
 

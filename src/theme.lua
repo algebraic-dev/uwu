@@ -33,12 +33,12 @@ end
 theme.notification_bg = "#1A1A1AF0"
 theme.notification_icon_size = 75
 
-theme.taglist_bg_occupied = "#151515"
-theme.taglist_bg_empty = "#000"
+theme.taglist_bg_occupied = "#333"
+theme.taglist_bg_empty = "#151515"
 theme.taglist_bg_focus = config_toml.theme.widget_color
-theme.taglist_fg_focus = "#00F"
-theme.taglist_fg_normal = "#00F"
-theme.taglist_fg_occupied = "#00F"
+theme.taglist_fg_focus = config_toml.theme.widget_color
+theme.taglist_fg_normal = config_toml.theme.widget_color
+theme.taglist_fg_occupied = config_toml.theme.widget_color
 theme.taglist_shape = gears.shape.circle
 theme.taglist_shape_focus = gears.shape.circle
 
@@ -81,7 +81,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = os.getenv("HOME") .. "/theme/bg.jpg"
+theme.wallpaper = config_toml.theme.background
 
 theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus

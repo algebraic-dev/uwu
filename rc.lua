@@ -24,6 +24,8 @@ actual_dir = os.getenv("HOME") .. "/.config/awesome/"
 -- Config do toml
 config_toml = utils.config
 
+terminal = config_toml.applications.terminal or "kitty"
+
 -- Error handling 
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical, title = "Oops, there were errors during startup!", text = awesome.startup_errors })
@@ -64,7 +66,7 @@ require("src.screen")
 require("src.keys")
 
 -- Algumas outras configurações
-menubar.utils.terminal = config_toml.applications.terminal or "kitty"
+menubar.utils.terminal = terminal
 mykeyboardlayout = awful.widget.keyboardlayout()
 root.keys(globalkeys)
 

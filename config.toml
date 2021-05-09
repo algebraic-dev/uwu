@@ -5,3 +5,4 @@ terminal = "kitty"
 useless_gap = 2
 widget_bg_color = "#111"
 widget_color = "#FF3969"
+background = "/home/chiyoku/theme/bg.jpg"

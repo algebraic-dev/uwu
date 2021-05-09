@@ -125,12 +125,11 @@ awful.screen.connect_for_each_screen(function(s)
         -- Notice that there is *NO* wibox.wibox prefix, it is a template,
         -- not a widget instance.
         widget_template = {
-            {
                 {
                     {
                         {
                             {
-                                id     = 'icon_role',
+                                id  = 'icon_role',
                                 widget = wibox.widget.imagebox,
                             },
                             right = 5,
@@ -145,9 +144,7 @@ awful.screen.connect_for_each_screen(function(s)
                 id = 'background_role',
                 bg = "#F00",
                 widget = wibox.container.background
-            },
-            left = 10,
-            widget = wibox.container.margin
+            
         }
     }
 
